@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laboratorio de JavaScript y AJAX</title>
+  <meta name="description" content="Ejercicios de JavaScript (palíndromos, números y vocales) y un cliente AJAX con XMLHttpRequest que muestra estados, cabeceras y código de cada petición.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E6474'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' font-weight='700' text-anchor='middle' fill='white'%3E%7B%7D%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Public+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/ejercicios.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/ajax.js" defer></script>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="contenedor">
+      <p class="asignatura">Desarrollo de Aplicaciones en Red</p>
+      <h1>Laboratorio de JavaScript y&nbsp;AJAX</h1>
+      <p class="entradilla">Cuatro ejercicios sobre cadenas y números resueltos con JavaScript puro, y un cliente AJAX que muestra cada fase de una petición HTTP: estados, cabeceras, código y contenido.</p>
+      <nav class="indice" aria-label="Ejercicios">
+        <ul>
+          <li><a href="#palindromo">Palíndromo</a></li>
+          <li><a href="#mayor">Mayor de dos números</a></li>
+          <li><a href="#vocales">Vocales que aparecen</a></li>
+          <li><a href="#conteo">Conteo de vocales</a></li>
+          <li><a href="#ajax">AJAX</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="contenedor bloque" aria-labelledby="titulo-js">
+      <h2 id="titulo-js">JavaScript</h2>
+      <p class="nota">Cada ejercicio valida la entrada y muestra el resultado en la página. Las tildes y diéresis no cambian la letra (á equivale a a), pero la ñ se conserva como letra propia.</p>
+
+      <div class="rejilla">
+        <!-- Ejercicio 1 -->
+        <article class="ejercicio" id="palindromo" aria-labelledby="t-palindromo">
+          <h3 id="t-palindromo"><span class="num">1</span>Palíndromo</h3>
+          <p class="enunciado">Detectar si la cadena de entrada es un palíndromo.</p>
+          <form id="form-palindromo" novalidate>
+            <label for="texto-palindromo">Palabra o frase</label>
+            <div class="fila">
+              <input id="texto-palindromo" type="text" autocomplete="off" spellcheck="false" placeholder="Dábale arroz a la zorra el abad">
+              <button type="submit">Comprobar</button>
+            </div>
+            <p class="ejemplos">Probar con:
+              <button type="button" class="ejemplo" data-destino="texto-palindromo">¿Acaso hubo búhos acá?</button>
+              <button type="button" class="ejemplo" data-destino="texto-palindromo">Anita lava la tina</button>
+              <button type="button" class="ejemplo" data-destino="texto-palindromo">JavaScript</button>
+            </p>
+          </form>
+          <output id="salida-palindromo" class="salida" for="texto-palindromo" aria-live="polite"></output>
+        </article>
+
+        <!-- Ejercicio 2 -->
+        <article class="ejercicio" id="mayor" aria-labelledby="t-mayor">
+          <h3 id="t-mayor"><span class="num">2</span>Mayor de dos números</h3>
+          <p class="enunciado">Pedir dos números y escribir en la pantalla cuál es el mayor.</p>
+          <form id="form-mayor" novalidate>
+            <div class="par">
+              <div class="campo">
+                <label for="numero-1">Primer número</label>
+                <input id="numero-1" type="text" inputmode="decimal" autocomplete="off" placeholder="10" aria-describedby="error-numero-1">
+                <p class="error-campo" id="error-numero-1"></p>
+              </div>
+              <div class="campo">
+                <label for="numero-2">Segundo número</label>
+                <input id="numero-2" type="text" inputmode="decimal" autocomplete="off" placeholder="9,75" aria-describedby="error-numero-2">
+                <p class="error-campo" id="error-numero-2"></p>
+              </div>
+            </div>
+            <button type="submit">Comparar</button>
+            <p class="ejemplos">Probar con:
+              <button type="button" class="ejemplo" data-par="10|9">10 y 9</button>
+              <button type="button" class="ejemplo" data-par="-3|-20">−3 y −20</button>
+              <button type="button" class="ejemplo" data-par="9007199254740993|9007199254740992">2⁵³+1 y 2⁵³</button>
+            </p>
+          </form>
+          <output id="salida-mayor" class="salida" for="numero-1 numero-2" aria-live="polite"></output>
+        </article>
+
+        <!-- Ejercicio 3 -->
+        <article class="ejercicio" id="vocales" aria-labelledby="t-vocales">
+          <h3 id="t-vocales"><span class="num">3</span>Vocales que aparecen</h3>
+          <p class="enunciado">Pedir una frase y escribir las vocales que aparecen.</p>
+          <form id="form-vocales" novalidate>
+            <label for="texto-vocales">Frase</label>
+            <div class="fila">
+              <input id="texto-vocales" type="text" autocomplete="off" placeholder="El murciélago comió pingüino">
+              <button type="submit">Buscar vocales</button>
+            </div>
+            <p class="ejemplos">Probar con:
+              <button type="button" class="ejemplo" data-destino="texto-vocales">Murciélago</button>
+              <button type="button" class="ejemplo" data-destino="texto-vocales">Pingüino feliz</button>
+              <button type="button" class="ejemplo" data-destino="texto-vocales">Rhythm</button>
+            </p>
+          </form>
+          <output id="salida-vocales" class="salida" for="texto-vocales" aria-live="polite"></output>
+        </article>
+
+        <!-- Ejercicio 4 -->
+        <article class="ejercicio" id="conteo" aria-labelledby="t-conteo">
+          <h3 id="t-conteo"><span class="num">4</span>Conteo de vocales</h3>
+          <p class="enunciado">Pedir una frase y escribir cuántas veces aparece cada una de las vocales.</p>
+          <form id="form-conteo" novalidate>
+            <label for="texto-conteo">Frase</label>
+            <div class="fila">
+              <input id="texto-conteo" type="text" autocomplete="off" placeholder="Hola, ¿cómo estás?">
+              <button type="submit">Contar vocales</button>
+            </div>
+            <p class="ejemplos">Probar con:
+              <button type="button" class="ejemplo" data-destino="texto-conteo">Hola, ¿cómo estás?</button>
+              <button type="button" class="ejemplo" data-destino="texto-conteo">Esternocleidomastoideo</button>
+            </p>
+          </form>
+          <output id="salida-conteo" class="salida" for="texto-conteo" aria-live="polite"></output>
+        </article>
+      </div>
+    </section>
+
+    <!-- AJAX -->
+    <section class="ajax" id="ajax" aria-labelledby="titulo-ajax">
+      <div class="contenedor bloque">
+        <h2 id="titulo-ajax">AJAX</h2>
+        <p class="nota">La petición se hace con <code>XMLHttpRequest</code>, que expone cada cambio de <code>readyState</code>. Por defecto se descarga esta misma página.</p>
+
+        <form id="formulario-ajax" class="formulario-ajax" novalidate>
+          <label for="recurso">URL del recurso</label>
+          <div class="fila">
+            <input id="recurso" type="text" inputmode="url" autocomplete="off" spellcheck="false" aria-describedby="error-recurso">
+            <button id="enviar" type="submit">Mostrar contenidos</button>
+          </div>
+          <p class="error-campo" id="error-recurso"></p>
+          <p class="ejemplos">Probar con:
+            <button type="button" class="ejemplo" data-recurso="">Esta página</button>
+            <button type="button" class="ejemplo" data-recurso="datos/servidor.json">JSON del mismo sitio</button>
+            <button type="button" class="ejemplo" data-recurso="datos/no-existe.html">Recurso inexistente (404)</button>
+            <button type="button" class="ejemplo" data-recurso="https://jsonplaceholder.typicode.com/todos/1">Otro origen con CORS</button>
+            <button type="button" class="ejemplo" data-recurso="https://example.com/">Otro origen sin CORS</button>
+          </p>
+        </form>
+
+        <p class="aviso" id="aviso-file" hidden>Abriste la página como archivo local (<code>file://</code>) y el navegador bloquea las peticiones AJAX desde ese origen. Sírvela por HTTP, por ejemplo con <code>python -m http.server 8000</code>, y abre <code>http://localhost:8000</code>.</p>
+
+        <section class="zona" aria-labelledby="t-estados">
+          <div class="zona-cabecera">
+            <h3 id="t-estados">Estados de la petición</h3>
+            <p class="estado-actual" id="estado-actual" aria-live="polite">No iniciada</p>
+          </div>
+          <div id="estados">
+            <ol class="pista" id="pista">
+              <li data-estado="0"><span class="paso">0</span><span class="nombre">No inicializada</span><code>UNSENT</code><span class="tiempo"></span></li>
+              <li data-estado="1"><span class="paso">1</span><span class="nombre">Cargando</span><code>OPENED</code><span class="tiempo"></span></li>
+              <li data-estado="2"><span class="paso">2</span><span class="nombre">Cargada</span><code>HEADERS_RECEIVED</code><span class="tiempo"></span></li>
+              <li data-estado="3"><span class="paso">3</span><span class="nombre">Interactiva</span><code>LOADING</code><span class="tiempo"></span></li>
+              <li data-estado="4"><span class="paso">4</span><span class="nombre">Completada</span><code>DONE</code><span class="tiempo"></span></li>
+            </ol>
+            <details class="bitacora-contenedor" open>
+              <summary>Registro de eventos</summary>
+              <ol class="bitacora" id="bitacora"></ol>
+            </details>
+          </div>
+        </section>
+
+        <div class="dos-columnas">
+          <section class="zona" aria-labelledby="t-codigo">
+            <h3 id="t-codigo">Código de estado</h3>
+            <div id="codigo" class="codigo"><p class="vacio">Aparecerá cuando lleguen las cabeceras de la respuesta.</p></div>
+          </section>
+          <section class="zona" aria-labelledby="t-cabeceras">
+            <h3 id="t-cabeceras">Cabeceras HTTP de la respuesta del servidor</h3>
+            <div id="cabeceras"><p class="vacio">Pulsa «Mostrar contenidos» para hacer la petición.</p></div>
+          </section>
+        </div>
+
+        <section class="zona" aria-labelledby="t-contenidos">
+          <div class="zona-cabecera">
+            <h3 id="t-contenidos">Contenidos del archivo</h3>
+            <p class="meta" id="meta-contenido"></p>
+          </div>
+          <pre id="contenidos" class="contenidos" tabindex="0"><span class="vacio">Sin contenido todavía.</span></pre>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Laboratorio de Desarrollo de Aplicaciones en Red. HTML, CSS y JavaScript sin dependencias; la lógica de los ejercicios se verifica con <code>node --test</code>.</p>
+    </div>
+  </footer>
+</body>
+</html>

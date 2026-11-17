@@ -1,0 +1,13 @@
+{
+  "recurso": "datos/servidor.json",
+  "descripcion": "Archivo de prueba servido desde el mismo origen que la página.",
+  "uso": "Permite comprobar que la petición AJAX recibe un tipo de contenido distinto de HTML.",
+  "ejercicios": ["palíndromo", "mayor de dos números", "vocales que aparecen", "conteo de vocales"],
+  "readyState": {
+    "0": "UNSENT",
+    "1": "OPENED",
+    "2": "HEADERS_RECEIVED",
+    "3": "LOADING",
+    "4": "DONE"
+  }
+}
